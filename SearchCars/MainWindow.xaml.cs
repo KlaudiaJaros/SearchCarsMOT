@@ -18,13 +18,14 @@ using System.Windows.Shapes;
 namespace SearchCars
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Search and sort MOT information csv file by make, model and year. Save your results to a new csv file.
+    /// Change the filePath if needed, as long as the first 5 fields are: make, model, year, no of pass, no of fails.
     /// </summary>
     public partial class MainWindow : Window
     {
         private const string filePath = @"C:\Users\klaud\source\repos\CollectionsLinq\motfailures.csv"; // change the file if needed
-        private List<Car> cars = new List<Car>(); // load data from csv file
-        private List<Car> results = new List<Car>(); // store search results
+        private List<Car> cars = new List<Car>(); // to load data from csv file
+        private List<Car> results = new List<Car>(); // to store search results
         private string[] sortOptions = { "Year: ascending", "Year: descending", "Pass: ascending", "Pass: descending", "Fail: ascending", "Fail: descending" };
         private string make;
         private string model;
@@ -40,7 +41,7 @@ namespace SearchCars
         private void LoadData()
         {
             StreamReader reader = new StreamReader(File.OpenRead(filePath));
-            String header = reader.ReadLine();
+            String header = reader.ReadLine(); // discard the header
 
             while (!reader.EndOfStream) // read from the file
             {
@@ -189,7 +190,7 @@ namespace SearchCars
                     file.WriteLine(header);
                     foreach (Car c in results)
                     {
-                        file.WriteLine(c.toCSV());
+                        file.WriteLine(c.ToCSV());
                     }
                 }
 
